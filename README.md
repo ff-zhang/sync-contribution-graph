@@ -10,7 +10,7 @@
 
 ## How to Use 🚀
 
-1. [Use this repo as a template](https://github.com/kefimochi/sync-contribution-graph/generate) to create a new repo, and provide a name.
+1. [Use this repo as a template](https://github.com/ff-zhang/sync-contribution-graph/generate) to create a new repo, and provide a name.
 2. Clone your new repo locally.  `cd` into the newly created directory.
 3. Create a [personal access token](https://github.com/settings/tokens) and replace the placeholder <PERSONAL_ACCESS_TOKEN> in [.env](.env) with it. Note the token does not require any permissions and is only used to query GitHub's GraphQL API.
 4. It requires NodeJS and `npm` (or `yarn`) to be installed on your machine. Run `npm i` or `yarn install` in your terminal.
