@@ -7,13 +7,17 @@
   "scripts": {
     "start": "node src/interface.js"
   },
-  "author": "Kate Efimova (@kefimochi)",
+  "contributors": [
+    "Kate Efimova (@kefimochi)",
+    "Felix Zhang (https://github.com/ff-zhang)"
+  ],
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.24.0",
+    "axios": "^1.6.8",
+    "dotenv": "^16.4.5",
     "fs": "0.0.1-security",
     "inquirer": "^8.2.0",
-    "node-html-parser": "^5.1.0",
+    "node-fetch": "^3.3.2",
     "shelljs": "^0.8.4"
   }
 }

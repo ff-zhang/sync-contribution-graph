@@ -1,7 +1,7 @@
-import { parse } from "node-html-parser";
-import axios from "axios";
 import fs from "fs";
 import shell from "shelljs";
+import fetch from "node-fetch";
+import "dotenv/config";
 
 // Gathers needed git commands for bash to execute per provided contribution data.
 const getCommand = (contribution) => {
@@ -11,30 +11,43 @@ const getCommand = (contribution) => {
 };
 
 export default async (input) => {
-  // Returns contribution graph html for a full selected year.
-  const res = await axios.get(
-    `https://github.com/${input.username}?tab=overview&from=${input.year}-12-01&to=${input.year}-12-31`
-  );
+  var query = `
+    query { 
+      user(login: "${input.username}") {
+        contributionsCollection(from: "${input.year}-01-01T00:00:00", to: "${input.year+1}-01-01T00:00:00") {
+          contributionCalendar {
+            weeks {
+              contributionDays {
+                date 
+                contributionCount
+              }
+            }
+          }
+        }
+      }
+    }`;
+  
+  const response = await fetch("https://api.github.com/graphql", {
+    method: "POST",
+    body: JSON.stringify({query}),
+    headers: {
+      'Authorization': `Bearer ${process.env.PERSONAL_ACCESS_TOKEN}`,
+    }
+  })
 
-  // Retrieves needed data from the html, grabs all the existing squares.
-  const document = parse(res.data);
-  const elements = document.querySelectorAll("td.ContributionCalendar-day");
+  const json = await response.json();
+  const weeks = json.data.user.contributionsCollection.contributionCalendar.weeks;
 
   let filteredDays = [];
-  elements.forEach((el) => {
-    // GH no longer stores # of contributions on the squares, so we have to
-    // find corresponding tooltip with accurate data.
-    const tooltipData = document.querySelector(`tool-tip[for="${el.id}"]`);
-    const innerContent = tooltipData.firstChild.textContent;
+  weeks.forEach((week) => {
+    week.contributionDays.forEach((day) => {
+      if (day.contributionCount == 0) return;
 
-    // Skipping those that have no contributoons
-    if (innerContent.includes("No")) return;
-
-    const numContributions = innerContent.split(" contribution")?.[0];
-    filteredDays.push({
-      date: el.getAttribute("data-date"),
-      count: isNaN(parseInt(numContributions)) ? 0 : parseInt(numContributions),
-    });
+      filteredDays.push({
+        date: day.date,
+        count: day.contributionCount,
+      });
+    })
   });
 
   const script = filteredDays

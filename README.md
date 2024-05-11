@@ -12,8 +12,9 @@
 
 1. [Use this repo as a template](https://github.com/kefimochi/sync-contribution-graph/generate) to create a new repo, and provide a name.
 2. Clone your new repo locally.  `cd` into the newly created directory.
-3. It requires NodeJS and `npm` (or `yarn`) to be installed on your machine. Run `npm i` or `yarn install` in your terminal.
-4. Use `npm start` or `yarn start` in order to trigger a series of terminal prompts that will help with configuration.
+3. Create a [personal access token](https://github.com/settings/tokens) and replace the placeholder <PERSONAL_ACCESS_TOKEN> in [.env](.env) with it. Note the token does not require any permissions and is only used to query GitHub's GraphQL API.
+4. It requires NodeJS and `npm` (or `yarn`) to be installed on your machine. Run `npm i` or `yarn install` in your terminal.
+5. Use `npm start` or `yarn start` in order to trigger a series of terminal prompts that will help with configuration.
    > On Windows, please run it from Git Bash.
 
 If you change your mind about these commits later, you can delete the repository and they'll disappear from your contribution graph.
