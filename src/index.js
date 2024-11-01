@@ -5,7 +5,7 @@ import "dotenv/config";
 
 // Gathers needed git commands for bash to execute per provided contribution data.
 const getCommand = (contribution) => {
-  return `GIT_AUTHOR_DATE="${contribution.date}T12:00:00" GIT_COMMITER_DATE="${contribution.date}T12:00:00" git commit --allow-empty -m "Rewriting History!" > /dev/null\n`.repeat(
+  return `GIT_AUTHOR_DATE="${contribution.date}T12:00:00" GIT_COMMITTER_DATE="${contribution.date}T12:00:00" git commit --allow-empty -m "Rewriting History!" > /dev/null\n`.repeat(
     contribution.count
   );
 };
