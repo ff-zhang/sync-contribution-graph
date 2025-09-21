@@ -29,13 +29,18 @@ export default async (input) => {
   
   const response = await fetch("https://api.github.com/graphql", {
     method: "POST",
-    body: JSON.stringify({query}),
+    body: JSON.stringify({ query }),
     headers: {
       'Authorization': `Bearer ${process.env.PERSONAL_ACCESS_TOKEN}`,
+      'Content-Type': 'application/json',
     }
   })
 
   const json = await response.json();
+  if (json.errors) {
+    throw new Error(JSON.stringify(json.errors, null, 2));
+  }
+
   const weeks = json.data.user.contributionsCollection.contributionCalendar.weeks;
 
   let filteredDays = [];
