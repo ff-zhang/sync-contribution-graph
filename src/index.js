@@ -14,7 +14,7 @@ export default async (input) => {
   var query = `
     query { 
       user(login: "${input.username}") {
-        contributionsCollection(from: "${input.year}-01-01T00:00:00", to: "${input.year+1}-01-01T00:00:00") {
+        contributionsCollection(from: "${input.year}-01-01T00:00:00", to: "${input.year}-12-31T23:59:59") {
           contributionCalendar {
             weeks {
               contributionDays {
